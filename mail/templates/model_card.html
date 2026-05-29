@@ -1,0 +1,36 @@
+<div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">{{ m.platform_label }}</span>
+    <span class="card-author">{{ m.author or "未知作者" }}</span>
+  </div>
+
+  <h3 class="card-title">{{ m.model_name }}</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      {% for tag in m.tags %}
+      <span class="tag tag-{{ tag.style }}">{{ tag.text }}</span>
+      {% endfor %}
+    </div>
+    <span class="type-label">类型：{{ m.category_label }}</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>{{ m.brain_summary }}</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：{{ m.vram_recommend }}</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">{{ m.cmd_title }}</div>
+    <code class="cmd-code">{{ m.cmd_body }}</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="{{ m.download_url }}" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>

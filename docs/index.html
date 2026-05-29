@@ -1,0 +1,2721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI模型日报 - 2026-05-29</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      background: #f0f2f5;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    h1 {
+      color: #1a1a2e;
+      font-size: 26px;
+      margin: 0 0 4px;
+    }
+    .date-label { color: #888; font-size: 14px; margin-bottom: 20px; }
+
+    .summary {
+      background: linear-gradient(135deg, #e8f0fe 0%, #f3e8ff 100%);
+      padding: 18px 20px;
+      border-radius: 10px;
+      margin-bottom: 28px;
+    }
+    .summary h2 { margin: 0 0 10px; font-size: 18px; color: #333; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    .summary-item {
+      background: rgba(255,255,255,0.7);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .summary-item strong { color: #1a73e8; font-size: 18px; display: block; }
+
+    .section { margin-top: 32px; }
+    .section-title {
+      font-size: 20px;
+      color: #1a1a2e;
+      border-left: 4px solid #1a73e8;
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+    .section-count { color: #888; font-size: 14px; font-weight: normal; }
+    .more-hint { color: #999; font-size: 13px; margin-top: 8px; }
+
+    /* Model Card - 参考图样式 */
+    .model-card {
+      border: 1px solid #e8e8ee;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+    .card-header { margin-bottom: 8px; }
+    .badge-platform {
+      display: inline-block;
+      background: #1a73e8;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .card-author {
+      margin-left: 10px;
+      color: #555;
+      font-size: 14px;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 8px 0 12px;
+      line-height: 1.3;
+    }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .tag-gray { background: #f0f0f0; color: #555; }
+    .tag-green { background: #e6f7ed; color: #1a7f4b; border: 1px solid #b7e4c7; }
+    .tag-purple { background: #f3e8ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+    .tag-blue { background: #e8f0fe; color: #1a56db; }
+    .tag-orange { background: #fff3e0; color: #e65100; }
+    .type-label { font-size: 13px; color: #666; white-space: nowrap; }
+
+    .brain-summary {
+      margin: 14px 0;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .brain-summary p { margin: 6px 0 0; }
+
+    .vram-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 14px;
+      color: #92400e;
+    }
+    .vram-icon { margin-right: 4px; }
+
+    .cmd-box {
+      background: #f8f9fa;
+      border-left: 4px solid #1a1a2e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+    }
+    .cmd-title {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .cmd-code {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 14px;
+      color: #1a1a2e;
+      word-break: break-all;
+    }
+
+    .card-footer { text-align: right; margin-top: 12px; }
+    .btn-repo {
+      display: inline-block;
+      background: #1a1a2e;
+      color: #fff !important;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .empty { color: #aaa; font-style: italic; padding: 12px 0; }
+    .footer {
+      margin-top: 36px;
+      font-size: 12px;
+      color: #bbb;
+      text-align: center;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI 模型日报</h1>
+    <p class="date-label">日期：2026-05-29</p>
+
+    <div class="summary">
+      <h2>今日重点</h2>
+      
+      <div class="summary-grid">
+        <div class="summary-item"><strong>527</strong>文本大模型</div>
+        <div class="summary-item"><strong>409</strong>文生图</div>
+        <div class="summary-item"><strong>6</strong>图生图</div>
+        <div class="summary-item"><strong>156</strong>文生视频</div>
+        <div class="summary-item"><strong>17</strong>图生视频</div>
+        <div class="summary-item"><strong>1115</strong>今日总计</div>
+      </div>
+      
+    </div>
+
+    
+    <div class="section">
+      <h2 class="section-title">
+        一、文本大模型
+        <span class="section-count">（共 527 个，展示 15 个）</span>
+      </h2>
+
+      
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">zzr0126</span>
+  </div>
+
+  <h3 class="card-title">zzr0126/Boundless-World-Model</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 zzr0126/Boundless-World-Model</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/zzr0126/Boundless-World-Model" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">etri-robotai-platform-dev</span>
+  </div>
+
+  <h3 class="card-title">etri-robotai-platform-dev/mlops-rest-test</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 etri-robotai-platform-dev/mlops-rest-test</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/etri-robotai-platform-dev/mlops-rest-test" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">ZEZRS</span>
+  </div>
+
+  <h3 class="card-title">ZEZRS/TexADiff</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 ZEZRS/TexADiff</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/ZEZRS/TexADiff" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Feudor2</span>
+  </div>
+
+  <h3 class="card-title">Feudor2/RuHalluBERT-base-v4</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。 补充说明：text-classification</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 Feudor2/RuHalluBERT-base-v4</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Feudor2/RuHalluBERT-base-v4" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">knowledgator</span>
+  </div>
+
+  <h3 class="card-title">knowledgator/opir-edge-multilang-v1.0</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。 补充说明：text-classification</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 knowledgator/opir-edge-multilang-v1.0</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/knowledgator/opir-edge-multilang-v1.0" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">knowledgator</span>
+  </div>
+
+  <h3 class="card-title">knowledgator/opir-multitask-large-v1.0</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。 补充说明：text-classification</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 knowledgator/opir-multitask-large-v1.0</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/knowledgator/opir-multitask-large-v1.0" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">ANGExllL</span>
+  </div>
+
+  <h3 class="card-title">ANGExllL/wisteria</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 ANGExllL/wisteria</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/ANGExllL/wisteria" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">ANGExllL</span>
+  </div>
+
+  <h3 class="card-title">ANGExllL/orchid</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 ANGExllL/orchid</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/ANGExllL/orchid" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">canada-quant</span>
+  </div>
+
+  <h3 class="card-title">canada-quant/DeepSeek-V4-Flash-NVFP4-FP8-MTP</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 canada-quant/DeepSeek-V4-Flash-NVFP4-FP8-MTP</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/canada-quant/DeepSeek-V4-Flash-NVFP4-FP8-MTP" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">void-lab</span>
+  </div>
+
+  <h3 class="card-title">void-lab/V-JiT-WEEB-450M</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 void-lab/V-JiT-WEEB-450M</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/void-lab/V-JiT-WEEB-450M" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">k-fold-structure</span>
+  </div>
+
+  <h3 class="card-title">k-fold-structure/triprorep-650M</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 k-fold-structure/triprorep-650M</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/k-fold-structure/triprorep-650M" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">k-fold-structure</span>
+  </div>
+
+  <h3 class="card-title">k-fold-structure/triprorep-150M</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 k-fold-structure/triprorep-150M</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/k-fold-structure/triprorep-150M" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">k-fold-structure</span>
+  </div>
+
+  <h3 class="card-title">k-fold-structure/triprorep-35M</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 k-fold-structure/triprorep-35M</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/k-fold-structure/triprorep-35M" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">knowledgator</span>
+  </div>
+
+  <h3 class="card-title">knowledgator/opir-edge-v1.0</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。 补充说明：text-classification</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB+ VRAM（视量化方式而定）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 knowledgator/opir-edge-v1.0</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/knowledgator/opir-edge-v1.0" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">ybyby624</span>
+  </div>
+
+  <h3 class="card-title">ybyby624/Qwen2_5-7B-Base-GiGPO-SearchR19k-1epoch-280steps-0410</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">7 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：文本大模型 (LLM)</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型主要负责大语言模型（LLM）核心推理，具备优秀的通用对话与指令跟随能力，支持本地 GGUF 量化部署，可有效降低显存占用，适合日常对话、代码辅助与知识问答场景。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：8GB VRAM（适合 RTX 4060 8G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">本地加载命令</div>
+    <code class="cmd-code">llama-cpp-python 或 ollama 加载 ybyby624/Qwen2_5-7B-Base-GiGPO-SearchR19k-1epoch-280steps-0410</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/ybyby624/Qwen2_5-7B-Base-GiGPO-SearchR19k-1epoch-280steps-0410" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+        
+        <p class="more-hint">另有 512 个模型未展示，请查看数据库或下次日报。</p>
+        
+      
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        二、文生图模型
+        <span class="section-count">（共 409 个，展示 15 个）</span>
+      </h2>
+
+      
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">nlecoy</span>
+  </div>
+
+  <h3 class="card-title">nlecoy/home-ops</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：HomeOps driven by Kubernetes and GitOps using Flux</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/nlecoy/home-ops" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">Aishwaryaa12</span>
+  </div>
+
+  <h3 class="card-title">Aishwaryaa12/flux-gitops</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（适合 RTX 3060 12G / 4070 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/Aishwaryaa12/flux-gitops" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">ReparacionesPhone</span>
+  </div>
+
+  <h3 class="card-title">ReparacionesPhone/flux2</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：🎨 Generate and edit images with the FLUX.2 model, a powerful flow matching transformer designed for advanced visual task</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（适合 RTX 3060 12G / 4070 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/ReparacionesPhone/flux2" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">chansyawn</span>
+  </div>
+
+  <h3 class="card-title">chansyawn/fluxnotes</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：An always-on-top Markdown editor for drafts, handoffs, and context.</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（适合 RTX 3060 12G / 4070 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/chansyawn/fluxnotes" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">akashkumars883</span>
+  </div>
+
+  <h3 class="card-title">akashkumars883/fluxy</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（适合 RTX 3060 12G / 4070 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/akashkumars883/fluxy" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">tanprodium</span>
+  </div>
+
+  <h3 class="card-title">tanprodium/augseg-checkpoints</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/tanprodium/augseg-checkpoints" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Sangsang</span>
+  </div>
+
+  <h3 class="card-title">Sangsang/grpo_Qwen3-4B_lora32_n2048_seed42_lr1e-06_mcl16384</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">4 Billion Params</span>
+      
+      <span class="tag tag-orange">LoRA</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：text-generation</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Sangsang/grpo_Qwen3-4B_lora32_n2048_seed42_lr1e-06_mcl16384" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Sangsang</span>
+  </div>
+
+  <h3 class="card-title">Sangsang/grpo_Qwen3-4B-Base_lora32_n2048_seed42_lr1e-06_mcl8192</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">4 Billion Params</span>
+      
+      <span class="tag tag-orange">LoRA</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：text-generation</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Sangsang/grpo_Qwen3-4B-Base_lora32_n2048_seed42_lr1e-06_mcl8192" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Sangsang</span>
+  </div>
+
+  <h3 class="card-title">Sangsang/grpo_Qwen3-4B-Instruct-2507_lora32_n2048_seed42_lr1e-06_mcl8192</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">4 Billion Params</span>
+      
+      <span class="tag tag-orange">LoRA</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Sangsang/grpo_Qwen3-4B-Instruct-2507_lora32_n2048_seed42_lr1e-06_mcl8192" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">synteris-ai</span>
+  </div>
+
+  <h3 class="card-title">synteris-ai/ministral-3-8B-lora-5e-5</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">8 Billion Params</span>
+      
+      <span class="tag tag-orange">LoRA</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/synteris-ai/ministral-3-8B-lora-5e-5" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">siouni</span>
+  </div>
+
+  <h3 class="card-title">VibeStyleBlend 05 - Chibi</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：&lt;p&gt;VibeStyleBlend 05 - Chibi&lt;/p&gt;&lt;p&gt;頭身を低くし、顔や表情を大きく見せる、デフォルメ寄りのスタイルです。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;主観的な印象をもとにスタイル傾向を分類し、ブレンドして作成したスタイルLo</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2659639" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">angelomaiota</span>
+  </div>
+
+  <h3 class="card-title">V67 Fashionable, modest, well-tailored</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：&lt;h2 id=&#34;v67-fashionable-modest-well-tailored-lora-component-for-flux&#34;&gt;&lt;strong&gt;V67 Fashionable, modest, well-tailored – L</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2433914" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">SpecialOne</span>
+  </div>
+
+  <h3 class="card-title">jellcaps Style Illustrious</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：&lt;p&gt;Made on site.&lt;/p&gt;&lt;p&gt;&lt;span style=&#34;color:rgb(250, 176, 5)&#34;&gt;&lt;strong&gt;Tip&lt;/strong&gt;&lt;/span&gt;&lt;span style=&#34;color:rgb(193, 194, </p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/1663685" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">MisterMR</span>
+  </div>
+
+  <h3 class="card-title">Lillian Roccabruna</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：&lt;p&gt;Hello there! 🌟 My name is Lillian Roccabruna, but you can call me Pony—just a quirky nickname that adds a playful twi</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2465757" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">EmilyMars</span>
+  </div>
+
+  <h3 class="card-title">Shirahama Kamome Style (Anima &amp; Illustrious)</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：文生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型专注于文生图（Text-to-Image）生成，可根据文字描述生成高质量图像，适用于插画创作、概念设计、ComfyUI / Stable Diffusion 工作流部署。 补充说明：&lt;p&gt;Works best at 0.95 weight.&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;If you want a model or wish to support me, commissions are open: &lt;a target=&#34;_</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：6GB VRAM（适合 RTX 3060 / 4060 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI / Stable Diffusion WebUI + 对应 Checkpoint/LoRA</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2208082" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+        
+        <p class="more-hint">另有 394 个模型未展示，请查看数据库或下次日报。</p>
+        
+      
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        三、图生图模型
+        <span class="section-count">（共 6 个）</span>
+      </h2>
+
+      
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">strangerzonehf</span>
+  </div>
+
+  <h3 class="card-title">strangerzonehf/Qwen-Image-Edit-LoRA-Collection</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-orange">LoRA</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：image-to-image</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/strangerzonehf/Qwen-Image-Edit-LoRA-Collection" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">ShizukuDrop</span>
+  </div>
+
+  <h3 class="card-title">ShizukuDrop/shizuku-translator</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：Self-hosted manga/doujin translator (JP/CN -&gt; EN). Runs on a Proxmox LXC with AMD Radeon iGPU via llama.cpp Vulkan. Fast</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/ShizukuDrop/shizuku-translator" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">Worg_Man</span>
+  </div>
+
+  <h3 class="card-title">The Exs-Tia Megapack (5 characters)</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：&lt;h3 id=&#34;disclaimer&#34;&gt;Disclaimer&lt;/h3&gt;&lt;p&gt;All showcase images with the exception of the cover image are straight Txt2Img. Th</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2646543" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">LatentHeart</span>
+  </div>
+
+  <h3 class="card-title">Anima 1.0 Base for the PC master race [SFW / NSFW] - Image to prompt + Turbo mode + ControlNet + 4k upscaler + CivitAI medatada</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">1 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：&lt;h3 id=&#34;custom-node-disclaimer&#34;&gt;⚠️ Custom Node Disclaimer&lt;/h3&gt;&lt;p&gt;This workflow heavily utilizes custom nodes. Manually m</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2658741" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">Milch</span>
+  </div>
+
+  <h3 class="card-title">Advanced Hirsute</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：&lt;p&gt;This is my try on the &#34;chest hair, hairy, body hair&#34; LoRA since the other ones weren&#39;t quite what I wanted.&lt;/p&gt;&lt;hr /&gt;</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/609337" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">CIVITAI</span>
+    <span class="card-author">lonecatone23</span>
+  </div>
+
+  <h3 class="card-title">Z-Image Base &amp; Turbo Pro Grade Realism Workflow (Low or High VRAM)</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">CIVITAI</span>
+      
+    </div>
+    <span class="type-label">类型：图生图模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 CIVITAI。该模型支持图生图（Image-to-Image）变换，可基于参考图进行风格迁移、重绘与细节增强，适合 ControlNet、Img2Img 等进阶创作流程。 补充说明：&lt;p&gt;&lt;strong&gt;Realism......&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;  &lt;strong&gt;I design the most professional workflows out there. &lt;/strong&gt;I </p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：10GB VRAM（ControlNet 额外占用，建议 3060 12G 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI Img2Img 或 ControlNet 工作流</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://civitai.com/models/2231181" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+        
+      
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        四、文生视频模型
+        <span class="section-count">（共 156 个，展示 15 个）</span>
+      </h2>
+
+      
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">nikhilachale</span>
+  </div>
+
+  <h3 class="card-title">nikhilachale/Renzaflow</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明： Model in. Video out. — Prompt-driven 3D animation via HTML rendering. Turn any .glb/.gltf into an animated MP4.</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/nikhilachale/Renzaflow" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">JXW666NB</span>
+  </div>
+
+  <h3 class="card-title">JXW666NB/TG-HELPER</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：TG HELPER is a desktop all-in-one AI agent with 70+ tools to read/write files, control browsers, analyze videos, manage </p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/JXW666NB/TG-HELPER" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">haritha755</span>
+  </div>
+
+  <h3 class="card-title">haritha755/SegVision</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：SegVision is a real-time AI-powered video segmentation web application built using YOLOv8, Flask, OpenCV, and a modern i</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/haritha755/SegVision" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">Ankursh121</span>
+  </div>
+
+  <h3 class="card-title">Ankursh121/ByteTracker-PN-control-Custom_Datasets</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：This is fully functional model which tracks/detects the target drone here, datasets which is being used is totally custo</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/Ankursh121/ByteTracker-PN-control-Custom_Datasets" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">rupalirajesh</span>
+  </div>
+
+  <h3 class="card-title">rupalirajesh/sycophancy_VidLMs</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Working to improve sycophancy in Video-Language Models through post-training.</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/rupalirajesh/sycophancy_VidLMs" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">adityapatil-byte</span>
+  </div>
+
+  <h3 class="card-title">adityapatil-byte/Human-pose-estimation-project</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Human Pose Estimation project using Python and OpenCV to detect and visualize body keypoints from images and videos usin</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/adityapatil-byte/Human-pose-estimation-project" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">VMAFx</span>
+  </div>
+
+  <h3 class="card-title">VMAFx/vmafx</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：VMAFX — perceptual video quality assessment. Modernized fork-evolved with SYCL/CUDA/HIP/Vulkan/Metal backends, tiny-AI m</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/VMAFx/vmafx" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">ppoitier</span>
+  </div>
+
+  <h3 class="card-title">ppoitier/sign-language-processing</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：This repository contains models, trainers and utils for Natural Language Processing (NLP) applied to Sign Languages. Thi</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/ppoitier/sign-language-processing" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">youzhe0305</span>
+  </div>
+
+  <h3 class="card-title">youzhe0305/YoCausal</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：YoCausal: How Far is Video Generation from World Model? A Causality Perspective</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/youzhe0305/YoCausal" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">darksidewalker</span>
+  </div>
+
+  <h3 class="card-title">darksidewalker/dasiwa-quant-station</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Advanced merging and quantizing tool for video models</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/darksidewalker/dasiwa-quant-station" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">wuwukaka</span>
+  </div>
+
+  <h3 class="card-title">wuwukaka/ComfyUI-WanAnimatePlus</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Seamless video connection and multi-reference image support for Wan Animate.</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/wuwukaka/ComfyUI-WanAnimatePlus" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">KyaniteLabs</span>
+  </div>
+
+  <h3 class="card-title">KyaniteLabs/liminal</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：AI creative coding studio for p5.js, GLSL, Three.js, music, video, and model-agnostic generative art workflows.</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/KyaniteLabs/liminal" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">lenieto</span>
+  </div>
+
+  <h3 class="card-title">lenieto/beyond-the-lab-cycling</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Marker-less biomechanical fatigue monitoring in cycling using OpenPose and deep learning. Extracts left-side joint angle</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/lenieto/beyond-the-lab-cycling" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">pranavi-72004</span>
+  </div>
+
+  <h3 class="card-title">pranavi-72004/Real-teme-Deepfake-Detection</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：A web-based application that detects faces in real-time video and identifies manipulated (deepfake) content using AI mod</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/pranavi-72004/Real-teme-Deepfake-Detection" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">SantANT20</span>
+  </div>
+
+  <h3 class="card-title">SantANT20/ComfyUI-VoxCPM2</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：文生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持文生视频（Text-to-Video），可根据文字描述直接生成视频片段，适用于短视频创作、动画预演与内容生产自动化。 补充说明：Integrate VoxCPM2 into ComfyUI for tokenizer-free, autoregressive text-to-speech with 30-language support, voice cloning</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：16GB VRAM（建议 RTX 4060Ti 16G / 3090 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/SantANT20/ComfyUI-VoxCPM2" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+        
+        <p class="more-hint">另有 141 个模型未展示，请查看数据库或下次日报。</p>
+        
+      
+    </div>
+    
+    <div class="section">
+      <h2 class="section-title">
+        五、图生视频模型
+        <span class="section-count">（共 17 个，展示 15 个）</span>
+      </h2>
+
+      
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">kiddo0001</span>
+  </div>
+
+  <h3 class="card-title">kiddo0001/ComfyUI-PainterAI2V</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：🎨 Enhance video generation by syncing audio to visuals with ComfyUI-PainterAI2V. Create precise lip-syncing and seamless</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/kiddo0001/ComfyUI-PainterAI2V" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">Bryanva25</span>
+  </div>
+
+  <h3 class="card-title">Bryanva25/veo-api</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：Enable text-to-video and image-to-video generation using Google Veo 3 API with a simple, efficient interface and broad f</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/Bryanva25/veo-api" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">Rookies-SL</span>
+  </div>
+
+  <h3 class="card-title">Rookies-SL/comfyui-video-wan2-2-14b-i2vxx</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：ComfyUI workflow Dockerized via comfyui-wizard</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/Rookies-SL/comfyui-video-wan2-2-14b-i2vxx" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">CGCL-codes</span>
+  </div>
+
+  <h3 class="card-title">CGCL-codes/Wan2.2-I2V-A14B-W4A4</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/CGCL-codes/Wan2.2-I2V-A14B-W4A4" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">chi030303</span>
+  </div>
+
+  <h3 class="card-title">chi030303/wan2.2-i2v-a14b-ptq</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/chi030303/wan2.2-i2v-a14b-ptq" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">bhupendra05</span>
+  </div>
+
+  <h3 class="card-title">bhupendra05/video-subtitle-app-v2</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">GITHUB</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：AI Shorts Studio v2 — Full pipeline: script → TTS → Whisper captions → FLUX images → Wan2.1 I2V animation → Remotion ren</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/bhupendra05/video-subtitle-app-v2" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">GITHUB</span>
+    <span class="card-author">Reopen-AI</span>
+  </div>
+
+  <h3 class="card-title">Reopen-AI/Wan2.2-I2V-14B-HiF4</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 GITHUB。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://github.com/Reopen-AI/Wan2.2-I2V-14B-HiF4" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">SSBOfficial</span>
+  </div>
+
+  <h3 class="card-title">SSBOfficial/BFS-Best-Face-Swap-Video</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/SSBOfficial/BFS-Best-Face-Swap-Video" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">qgfvadfuvads</span>
+  </div>
+
+  <h3 class="card-title">qgfvadfuvads/qwen35-video-rm</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/qgfvadfuvads/qwen35-video-rm" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Neeberman</span>
+  </div>
+
+  <h3 class="card-title">Neeberman/stable-video-diffusion-img2vid-xt</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Neeberman/stable-video-diffusion-img2vid-xt" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">nsfw-image-to-video</span>
+  </div>
+
+  <h3 class="card-title">nsfw-image-to-video/nsfw-ai-image-to-video</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/nsfw-image-to-video/nsfw-ai-image-to-video" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">diffusers</span>
+  </div>
+
+  <h3 class="card-title">diffusers/LTX-2.3-Diffusers</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/diffusers/LTX-2.3-Diffusers" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">diffusers</span>
+  </div>
+
+  <h3 class="card-title">diffusers/LTX-2.3-Distilled-Diffusers</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-gray">HUGGINGFACE</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/diffusers/LTX-2.3-Distilled-Diffusers" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">Inspirationsss</span>
+  </div>
+
+  <h3 class="card-title">Inspirationsss/Wan2.2-I2V-A14B-Diffusers</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/Inspirationsss/Wan2.2-I2V-A14B-Diffusers" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+          <div class="model-card">
+  <div class="card-header">
+    <span class="badge-platform">HUGGINGFACE</span>
+    <span class="card-author">xuechendi</span>
+  </div>
+
+  <h3 class="card-title">xuechendi/Wan2.2-I2V-A14B-Diffusers-reduced-to-2layers</h3>
+
+  <div class="card-meta">
+    <div class="tag-list">
+      
+      <span class="tag tag-purple">14 Billion Params</span>
+      
+    </div>
+    <span class="type-label">类型：图生视频模型</span>
+  </div>
+
+  <div class="brain-summary">
+    <strong>【智脑小结】</strong>
+    <p>此项发布源自 HUGGINGFACE。该模型支持图生视频（Image-to-Video），可将静态图片转化为动态视频，保持角色与场景一致性，适合 Wan2.1、Animate 等图转视频工作流。 补充说明：image-to-video</p>
+  </div>
+
+  <div class="vram-box">
+    <span class="vram-icon">⚡</span>
+    <strong>本地推荐显存：12GB VRAM（建议 RTX 3060 12G / 4070Ti 及以上）</strong>
+  </div>
+
+  <div class="cmd-box">
+    <div class="cmd-title">推荐部署方式</div>
+    <code class="cmd-code">ComfyUI + Wan2.1 / CogVideo 等工作流节点</code>
+  </div>
+
+  <div class="card-footer">
+    <a class="btn-repo" href="https://huggingface.co/xuechendi/Wan2.2-I2V-A14B-Diffusers-reduced-to-2layers" target="_blank">前往模型仓库 →</a>
+  </div>
+</div>
+        
+        
+        <p class="more-hint">另有 2 个模型未展示，请查看数据库或下次日报。</p>
+        
+      
+    </div>
+    
+
+    <div class="footer">
+      <p>本邮件由 AI 模型日报系统自动生成 · 按类别智能分类展示</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+database/ai_models.db
+reports/
+*.log
+logs/
+
