@@ -1,9 +1,8 @@
 import logging
 
-import requests
-
 from collectors.base import ModelRecord
-from config import COLLECTOR_LIMIT, HF_SEARCH_TERMS, REQUEST_TIMEOUT
+from collectors.http_client import http_get
+from config import COLLECTOR_LIMIT, HF_SEARCH_TERMS
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +33,7 @@ def _extract_size_gb(item: dict) -> str:
 
 
 def _fetch_hf_models(params: dict) -> list[dict]:
-    resp = requests.get(HF_API, params=params, timeout=REQUEST_TIMEOUT)
+    resp = http_get(HF_API, params=params)
     resp.raise_for_status()
     return resp.json()
 

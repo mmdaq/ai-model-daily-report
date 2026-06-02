@@ -1,9 +1,8 @@
 import logging
 
-import requests
-
 from collectors.base import ModelRecord
-from config import COLLECTOR_LIMIT, REQUEST_TIMEOUT
+from collectors.http_client import http_get
+from config import COLLECTOR_LIMIT
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +26,7 @@ def collect() -> list[ModelRecord]:
     params = {"sort": "Newest", "limit": COLLECTOR_LIMIT}
 
     try:
-        resp = requests.get(CIVITAI_API, params=params, timeout=REQUEST_TIMEOUT)
+        resp = http_get(CIVITAI_API, params=params)
         resp.raise_for_status()
         items = resp.json().get("items", [])
     except Exception as e:

@@ -64,7 +64,19 @@ def enrich_model(model: dict) -> dict:
     return enrich_model_card(base)
 
 
-def build_report_context(models: list[dict], report_date: date | None = None) -> dict:
+REPORT_MODE_LABELS = {
+    "new": "今日新增模型",
+    "digest": "今日暂无全新模型，以下为本次采集到的最新模型精选",
+    "recent": "今日采集未成功，以下为库内最近收录的模型（请检查网络/代理）",
+    "empty": "暂无模型数据，请检查网络连接或平台接口",
+}
+
+
+def build_report_context(
+    models: list[dict],
+    report_date: date | None = None,
+    report_mode: str = "new",
+) -> dict:
     report_date = report_date or date.today()
     enriched = [enrich_model(m) for m in models]
 
@@ -89,6 +101,8 @@ def build_report_context(models: list[dict], report_date: date | None = None) ->
 
     return {
         "report_date": report_date.isoformat(),
+        "report_mode": report_mode,
+        "report_mode_label": REPORT_MODE_LABELS.get(report_mode, ""),
         "sections": sections,
         "summary": {
             "text_llm": summary_counts.get(CATEGORY_TEXT_LLM, 0),

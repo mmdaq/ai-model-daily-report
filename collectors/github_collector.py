@@ -1,9 +1,8 @@
 import logging
 
-import requests
-
 from collectors.base import ModelRecord
-from config import COLLECTOR_LIMIT, GITHUB_KEYWORDS, GITHUB_TOKEN, REQUEST_TIMEOUT
+from collectors.http_client import http_get
+from config import COLLECTOR_LIMIT, GITHUB_KEYWORDS, GITHUB_TOKEN
 
 logger = logging.getLogger(__name__)
 
@@ -24,9 +23,7 @@ def _search_repos(query: str) -> list[dict]:
         "order": "desc",
         "per_page": min(COLLECTOR_LIMIT, 30),
     }
-    resp = requests.get(
-        GITHUB_API, params=params, headers=_headers(), timeout=REQUEST_TIMEOUT
-    )
+    resp = http_get(GITHUB_API, params=params, headers=_headers())
     resp.raise_for_status()
     return resp.json().get("items", [])
 

@@ -11,8 +11,9 @@ from database import Database
 
 def main():
     db = Database(DATABASE_PATH)
-    models = db.get_today_models(date.today())
-    ctx = build_report_context(models, date.today())
+    models, mode = db.get_report_models(date.today())
+    ctx = build_report_context(models, date.today(), report_mode=mode)
+    print(f"Report mode: {mode}")
     html = render_html_report(ctx)
 
     out = Path("reports/test_report.html")

@@ -181,6 +181,9 @@
 
     <div class="summary">
       <h2>今日重点</h2>
+      {% if report_mode_label %}
+      <p style="margin:0 0 12px;color:#555;font-size:14px;">{{ report_mode_label }}</p>
+      {% endif %}
       {% if has_new_models %}
       <div class="summary-grid">
         <div class="summary-item"><strong>{{ summary.text_llm }}</strong>文本大模型</div>
@@ -191,7 +194,7 @@
         <div class="summary-item"><strong>{{ summary.total_count }}</strong>今日总计</div>
       </div>
       {% else %}
-      <p class="empty">今日暂无新增模型，系统运行正常。</p>
+      <p class="empty">{{ report_mode_label or "今日暂无模型数据，系统运行正常。" }}</p>
       {% endif %}
     </div>
 

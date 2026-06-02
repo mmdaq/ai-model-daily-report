@@ -74,8 +74,14 @@ def run_daily_report(force: bool = False, publish_github: bool = False) -> None:
     new_count = save_records(db, records)
     logger.info("Saved %d new models", new_count)
 
-    today_models = db.get_today_models(today)
-    context = build_report_context(today_models, today)
+    report_models, report_mode = db.get_report_models(today)
+    logger.info(
+        "Report mode: %s, models: %d (new saved today: %d)",
+        report_mode,
+        len(report_models),
+        new_count,
+    )
+    context = build_report_context(report_models, today, report_mode=report_mode)
     html = render_html_report(context)
 
     if publish_github:

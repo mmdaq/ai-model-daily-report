@@ -1,10 +1,9 @@
 import json
 import logging
 
-import requests
-
 from collectors.base import ModelRecord
-from config import COLLECTOR_LIMIT, MODELSCOPE_API, MODELSCOPE_ORGS, REQUEST_TIMEOUT
+from collectors.http_client import http_put
+from config import COLLECTOR_LIMIT, MODELSCOPE_API, MODELSCOPE_ORGS
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +13,10 @@ def _fetch_org_models(org: str) -> list[dict]:
     payload = json.dumps(
         {"Path": org, "PageNumber": 1, "PageSize": per_org}
     )
-    resp = requests.put(
+    resp = http_put(
         MODELSCOPE_API,
         data=payload,
         headers={"Content-Type": "application/json"},
-        timeout=REQUEST_TIMEOUT,
     )
     resp.raise_for_status()
     data = resp.json().get("Data") or resp.json().get("data") or {}

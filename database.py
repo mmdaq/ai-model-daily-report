@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS models (
     description TEXT,
     dedup_key TEXT UNIQUE NOT NULL,
     first_seen_at TEXT NOT NULL,
+    last_seen_at TEXT NOT NULL,
     created_at TEXT NOT NULL
 );
 
@@ -47,6 +48,17 @@ class Database:
     def _init_db(self) -> None:
         with self._connect() as conn:
             conn.executescript(SCHEMA)
+            self._migrate(conn)
+
+    def _migrate(self, conn: sqlite3.Connection) -> None:
+        cols = {row[1] for row in conn.execute("PRAGMA table_info(models)")}
+        if "last_seen_at" not in cols:
+            conn.execute(
+                "ALTER TABLE models ADD COLUMN last_seen_at TEXT NOT NULL DEFAULT ''"
+            )
+            conn.execute(
+                "UPDATE models SET last_seen_at = first_seen_at WHERE last_seen_at = ''"
+            )
 
     def insert_model(self, record: ModelRecord) -> bool:
         """Insert model if new. Returns True if inserted."""
@@ -59,8 +71,8 @@ class Database:
                         model_name, author, source_platform, model_type,
                         model_size, is_gguf, quant_method, vae, clip,
                         workflow, download_url, description, dedup_key,
-                        first_seen_at, created_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        first_seen_at, last_seen_at, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         record.model_name,
@@ -78,13 +90,36 @@ class Database:
                         record.dedup_key(),
                         now,
                         now,
+                        now,
                     ),
                 )
                 return True
             except sqlite3.IntegrityError:
+                conn.execute(
+                    """
+                    UPDATE models SET
+                        last_seen_at = ?,
+                        model_type = ?,
+                        model_size = ?,
+                        is_gguf = ?,
+                        quant_method = ?,
+                        description = ?
+                    WHERE dedup_key = ?
+                    """,
+                    (
+                        now,
+                        record.model_type,
+                        record.model_size,
+                        record.is_gguf,
+                        record.quant_method,
+                        record.description,
+                        record.dedup_key(),
+                    ),
+                )
                 return False
 
     def get_today_models(self, target_date: Optional[date] = None) -> list[dict]:
+        """仅今日首次入库的模型。"""
         target = target_date or date.today()
         prefix = target.isoformat()
         with self._connect() as conn:
@@ -97,6 +132,54 @@ class Database:
                 (f"{prefix}%",),
             ).fetchall()
         return [dict(row) for row in rows]
+
+    def get_today_seen_models(self, target_date: Optional[date] = None) -> list[dict]:
+        """今日采集过程中出现过的模型（含历史已收录）。"""
+        target = target_date or date.today()
+        prefix = target.isoformat()
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT * FROM models
+                WHERE last_seen_at LIKE ?
+                ORDER BY last_seen_at DESC
+                """,
+                (f"{prefix}%",),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def get_recent_models(self, limit: int = 100) -> list[dict]:
+        """最近收录/出现的模型（采集失败时的兜底）。"""
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT * FROM models
+                ORDER BY COALESCE(NULLIF(last_seen_at, ''), first_seen_at) DESC
+                LIMIT ?
+                """,
+                (limit,),
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def get_report_models(self, target_date: Optional[date] = None) -> tuple[list[dict], str]:
+        """
+        返回 (用于日报的模型列表, 报告模式说明)。
+        1. 今日新增  2. 今日采集精选  3. 库内最近模型
+        """
+        today = target_date or date.today()
+        new_models = self.get_today_models(today)
+        if new_models:
+            return new_models, "new"
+
+        seen_today = self.get_today_seen_models(today)
+        if seen_today:
+            return seen_today, "digest"
+
+        recent = self.get_recent_models(100)
+        if recent:
+            return recent, "recent"
+
+        return [], "empty"
 
     def has_report_sent_today(self, target_date: Optional[date] = None) -> bool:
         target = (target_date or date.today()).isoformat()
